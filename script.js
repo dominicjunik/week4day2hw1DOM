@@ -23,7 +23,9 @@ for(let i = 0; i < menuLinks.length; i++){
     const aTag = document.createElement("a");
     topMenuEl.appendChild(aTag);
     aTag.setAttribute('href', menuLinks[i].href);
-    aTag.textContent = menuLinks[i].text;
-    
-    
+    aTag.textContent = menuLinks[i].text;      
 }
+
+// git add . FIRST STEP
+// git commit -m "descriptive of changes"
+// git push
