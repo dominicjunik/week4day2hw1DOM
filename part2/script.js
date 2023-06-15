@@ -48,7 +48,7 @@ subMenuEl.style.position = 'absolute';
 subMenuEl.style.top = 0;
 
 const topMenuLinks = document.querySelectorAll('a')
-console.log(topMenuLinks);
+
 
 let showingSubMenu = false;
 
@@ -57,16 +57,77 @@ topMenuEl.addEventListener('click', function(evt){
   if(evt.target.localName !== 'a') {      
     return;
   }
-  if(evt.target.getAttribute(className) === 'active'){
+  if(evt.target.getAttribute("class") === 'active'){
     evt.target.classList.remove('active')
     showingSubMenu = false;
     subMenuEl.style.top = 0;
     return;
   }
-  topMenuLinks.classList.remove('active');
-  evt.target.classList.add('active')
-  console.log(evt.target.textContent)  
+  for (let i of topMenuLinks) {i.classList.remove('active');}
+  evt.target.classList.add('active')  
+  let subLink;
+  for(let i of menuLinks) {
+    if(i.text === evt.target.textContent){
+      subLink = i;
+    }
+  }  
+  console.log(subLink)
+  if (evt.target.textContent==="about"){
+      showingSubMenu = false;
+      mainEl.innerHTML = `<h1>about</h1>`
+  }
+  else {
+      showingSubMenu = true;
+  }
+
+  let insideSubLinks = subLink.subLinks;
+  console.log(insideSubLinks)
+
+  function buildSubMenu(object) { 
+    subMenuEl.innerHTML = '';
+    for(let i = 0; i < object.length; i++) {
+      const aTag = document.createElement("a"); 
+      subMenuEl.appendChild(aTag);      
+      aTag.setAttribute('href', object[i].href);
+      aTag.textContent = object[i].text;      
+    }
+  }
+
+  if(showingSubMenu === true) {
+    buildSubMenu(insideSubLinks); 
+    subMenuEl.style.top = '100%';
+    
+    
+  } else {
+    subMenuEl.style.top = 0;
+  }    
+
+  subMenuEl.addEventListener('click', function(evt){
+    evt.preventDefault();
+    if(evt.target.localName !== 'a') {      
+      return;
+    }    
+    showingSubMenu = false;
+    subMenuEl.style.top = 0;
+    for (let i of topMenuLinks) {i.classList.remove('active');} 
+    // console.log(evt.target)
+    mainEl.innerHTML = `<h1> ${evt.target.textContent} </h1>`;
+    
+  });
+  
 });
+
+
+//   if(evt.target.getAttribute('class') === 'active'){
+//     evt.target.classList.remove('active')
+//     showingSubMenu = false;
+//     subMenuEl.style.top = 0;
+//     return;
+//   }
+//   topMenuLinks.classList.remove('active');
+//   evt.target.classList.add('active')
+//   console.log(evt.target.textContent)  
+// });
 // git add . FIRST STEP
 // git commit -m "descriptive of changes"
 // git push
